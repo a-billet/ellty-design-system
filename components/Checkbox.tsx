@@ -1,4 +1,7 @@
 "use client";
+import { useState, useCallback } from "react";
+import CheckIcon from "../static/icons/CheckIcon";
+
 interface CheckboxProps {
     isChecked?: boolean;
     onChange?: (checked: boolean) => void;
@@ -6,43 +9,40 @@ interface CheckboxProps {
 }
 
 export default function Checkbox({ isChecked = false, onChange, label }: CheckboxProps) {
-    const handleClick = () => {
+    const [showShadow, setShowShadow] = useState(false);
+
+    const handleClick = useCallback(() => {
         if (onChange) {
             onChange(!isChecked);
         }
-    };
+
+        // Show shadow on release
+        setShowShadow(true);
+        setTimeout(() => setShowShadow(false), 100);
+    }, [onChange, isChecked]);
 
     return (
-        <div className="flex items-center gap-2 text-gray-dark cursor-pointer group w-full justify-between px-4 h-[42px]" onClick={handleClick}>
+        <div className="group flex w-full items-center justify-between py-2 pr-[15px] pl-[22px] text-dark text-[14px] cursor-pointer font-normal" onClick={handleClick}>
             {label && (
-                <label className="cursor-pointer select-none">
+                <div className="cursor-pointer">
                     {label}
-                </label>
+                </div>
             )}
             <div
                 className={`h-[25px] w-[25px] border rounded-md flex items-center justify-center cursor-pointer
+                     ${showShadow ? 'shadow-[0_0_0_3px_rgba(36,105,246,0.1)]' : ''}
                      ${isChecked
-                        ? 'bg-blue border-blue hover:bg-blue-light group-hover:bg-blue-light'
-                        : 'border-gray-light hover:border-gray group-hover:border-gray bg-white'
+                        ? 'bg-blue border-blue group-hover:bg-blue-light'
+                        : 'border-gray-light group-hover:border-gray group-hover:border-[1.5] bg-white'
                     }`}
             >
-                {isChecked && (
-                    <svg
-                        className="w-4 h-4 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M5 13l4 4L19 7"
-                        />
-                    </svg>
+                {isChecked && <CheckIcon />}
+                {!isChecked && (
+                    <div className="opacity-0 group-hover:opacity-100">
+                        <CheckIcon color="#E3E3E3" />
+                    </div>
                 )}
             </div>
-
         </div>
     );
 }

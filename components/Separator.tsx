@@ -1,6 +1,8 @@
 
 export default function Separator() {
     return (
-        <hr className="w-full border-t border-gray-light mx-2.5" />
+        <div className="w-full px-[15px] py-2.5">
+            <hr className="border-t border-gray-light" />
+        </div>
     );
 }
