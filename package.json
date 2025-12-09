@@ -10,7 +10,7 @@
   },
   "description": "First Test Assignment for Ellty. Built with React, Next.js, TypeScript, and Tailwind CSS",
   "dependencies": {
-    "next": "16.0.4",
+    "next": "16.0.7",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },
